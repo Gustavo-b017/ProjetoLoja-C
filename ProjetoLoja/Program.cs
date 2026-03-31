@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ProjetoLoja.Interfaces;
 using ProjetoLoja.Repositorio;
+using ProjetoLoja.Repositorios;
 
 var builder = WebApplication.CreateBuilder(args);
 //injentando a dependência para validar a rota e dar permissão
@@ -14,9 +15,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 //INJEÇÃO DE DEPENDÊNCIA
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
-
-
-
+builder.Services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
 
 
 
