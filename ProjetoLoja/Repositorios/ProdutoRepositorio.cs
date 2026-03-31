@@ -13,6 +13,17 @@ namespace ProjetoLoja.Repositorios
             _connectionString = config.GetConnectionString("Conexao");
         }
 
+        public void CadastrarProdutudo(ProdutoViewModel produto)
+        {
+    
+            using var conn = new MySqlConnection(_connectionString);
+            var cmd = new MySqlCommand("INSERT INTO Produtos (Nome,Preco) VALUES(@nome, @preco)", conn);
+            cmd.Parameters.AddWithValue("@nome", produto.Nome);
+            cmd.Parameters.AddWithValue("@preco", produto.Preco);
+            cmd.ExecuteNonQuery();
+        }
+        
+
         public IEnumerable<ProdutoViewModel> ListarTudo()
         {
             var lista = new List<ProdutoViewModel>();
@@ -61,13 +72,8 @@ namespace ProjetoLoja.Repositorios
             return null;
         }
 
-        public void CadastrarProduto(ProdutoViewModel prodmodel)
-        {
-            using var conn = new MySqlConnection(_connectionString);
-            var cmd = new MySqlCommand("INSERT INTO Produtos (Nome,Preco) VALUES(@nome, @preco)", conn);
-            cmd.Parameters.AddWithValue("@nome",prodmodel.Nome);
-            cmd.Parameters.AddWithValue("@preco", prodmodel.Preco);
-            cmd.ExecuteNonQuery();
-        }
+    
+
+     
     }
 }

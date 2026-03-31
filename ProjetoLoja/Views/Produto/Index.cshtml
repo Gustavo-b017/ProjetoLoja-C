@@ -1,0 +1,93 @@
+﻿@model IEnumerable<ProjetoLoja.Models.ProdutoViewModel>
+@{
+}
+
+
+
+
+<div>
+    <div>
+        <div>
+            <h4>Produtos</h4>
+            <a asp-controller="Produto" asp-action="CadastrarProduto">
+                Novo Produto
+            </a>
+        </div>
+
+        <div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Produto</th>
+                            <th>Preço</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>
+                                    <span>@item.Nome</span>
+                                </td>
+                                <td>
+                                    <span>Geral</span>
+                                </td>
+                                <td>
+                                    <span>@item.Preco.ToString("C")</span>
+                                </td>
+                                <td>
+                                    <div>
+                                        @if (User.HasClaim("NivelAcesso", "Admin"))
+                                        {
+                                            <a asp-controller="Produto" asp-action="EditarProduto" asp-route-id="@item.Id">
+                                                Editar
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            @* Opcional: Mostra um cadeado ou texto para usuários comuns *@
+                                            <button>
+                                                Acesso Negado
+                                            </button>
+                                        }
+
+
+
+                                        @* AJUSTE: O botão excluir só aparece para quem tem Nível Admin *@
+                                        @if (User.HasClaim("NivelAcesso", "Admin"))
+                                        {
+                                            <form asp-controller="Produto" asp-action="ExcluirProduto" asp-route-id="@item.Id"
+                                                  method="post" onsubmit="return confirm('Excluir @item.Nome permanentemente?')">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit">
+                                                    Excluir
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            @* Opcional: Mostra um cadeado ou texto para usuários comuns *@
+                                            <button>
+                                                Acesso Negado
+                                            </button>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @if (!Model.Any())
+        {
+            <div>
+                <p>Nenhum produto encontrado no estoque.</p>
+            </div>
+        }
+    </div>
+</div>
