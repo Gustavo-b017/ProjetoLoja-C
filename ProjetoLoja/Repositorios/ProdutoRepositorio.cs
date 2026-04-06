@@ -13,10 +13,11 @@ namespace ProjetoLoja.Repositorios
             _connectionString = config.GetConnectionString("Conexao");
         }
 
-        public void CadastrarProdutudo(ProdutoViewModel produto)
+        public void CadastrarProduto(ProdutoViewModel produto)
         {
-    
+            
             using var conn = new MySqlConnection(_connectionString);
+            conn.Open();
             var cmd = new MySqlCommand("INSERT INTO Produtos (Nome,Preco) VALUES(@nome, @preco)", conn);
             cmd.Parameters.AddWithValue("@nome", produto.Nome);
             cmd.Parameters.AddWithValue("@preco", produto.Preco);
@@ -72,8 +73,27 @@ namespace ProjetoLoja.Repositorios
             return null;
         }
 
-    
-
-     
+        public void EditarProduto(ProdutoViewModel prodmodel)
+        {
+            using var conn = new MySqlConnection(_connectionString);
+            conn.Open();
+            //Comando para alterar os dados de um produto que já existe usando o ID dele como referência.
+            var cmd = new MySqlCommand("UPDATE Produtos SET Nome = @nome,Preco = @preco WHERE Id= @id", conn);
+            //Passa o Nome,Preço e que o usuário quer editar para o comando SQL.
+            cmd.Parameters.AddWithValue("@nome", prodmodel.Nome);
+            cmd.Parameters.AddWithValue("@preco", prodmodel.Preco);
+            cmd.Parameters.AddWithValue("@id", prodmodel.Id);
+            ////Executa o comando. Como é um cadastro (não estamos lendo nada), usamos "NonQuery" (não-consulta).
+            cmd.ExecuteNonQuery();
+        }
+        public void ExcluirProduto(int id)
+        {
+            using var conn = new MySqlConnection(_connectionString);
+            conn.Open();
+            //Comando para remover permanentemente a linha do produto no banco de dados.
+            var cmd = new MySqlCommand("DELETE FROM Produtos WHERE Id = @id", conn);
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.ExecuteNonQuery();
+        }
     }
 }

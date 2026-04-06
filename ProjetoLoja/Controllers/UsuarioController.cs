@@ -55,6 +55,8 @@ namespace ProjetoLoja.Controllers
                     //indica que a sessão se encerra ao fechar o navegador
                     new AuthenticationProperties { IsPersistent = false });
             }
+            // Se chegou aqui, é porque o usuário é nulo (Login falhou)
+            ModelState.AddModelError(string.Empty, "E-mail ou senha inválidos.");
             return RedirectToAction("Index", "Home");
         }
         public async Task<IActionResult> Sair()

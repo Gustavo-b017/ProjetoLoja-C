@@ -7,12 +7,20 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProjetoLoja.styles.css" asp-append-version="true" />
+    <style>
+        /* Dica: Deixa o fundo da página num tom de cinza bem escuro para combinar */
+        body {
+            background-color: #f8f9fa;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom shadow-sm mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProjetoLoja</a>
+                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-shop"></i> ProjetoLoja
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,48 +28,54 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-white-50" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
 
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Produto" asp-action="Index">Produto</a>
-                            </li>
-                        }
-                       
-                    </ul>
-                    <ul class="navbar-nav"> 
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li>
-                                <span>Olá, @User.Identity.Name</span>
-                            </li>
-                            <li>
-                                <a asp-controller="Usuario" asp-action="Sair">Sair</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a asp-controller="Usuario" asp-action="Login">Entrar</a>
+                                <a class="nav-link text-white-50" asp-area="" asp-controller="Produto" asp-action="Index">Produtos</a>
                             </li>
                         }
                     </ul>
 
+                    <ul class="navbar-nav align-items-center gap-3">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <span class="navbar-text text-white me-2">
+                                    Olá, <strong>@User.Identity.Name</strong>
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-outline-danger btn-sm" asp-controller="Usuario" asp-action="Sair">Sair</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="btn btn-primary btn-sm px-4" asp-controller="Usuario" asp-action="Login">Entrar</a>
+                            </li>
+                        }
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+    <footer class="border-top footer text-muted bg-white py-2 mt-4">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center">
+            <p class="col-md-4 mb-0">&copy; 2026 <strong>ProjetoLoja</strong></p>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - ProjetoLoja - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <ul class="nav col-md-4 justify-content-end">
+                <li class="nav-item"><a asp-controller="Home" asp-action="Index" class="nav-link px-2 text-muted">Home</a></li>
+                <li class="nav-item"><a asp-controller="Produto" asp-action="Index" class="nav-link px-2 text-muted">Produtos</a></li>
+            </ul>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
