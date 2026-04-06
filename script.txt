@@ -10,10 +10,19 @@ CREATE TABLE Usuarios(
  Nivel Varchar(40) NOT NULL
 );
 
-INSERT INTO Usuarios(Nome,Email,Senha,Nivel)
-VALUES('Administrador','admin@email.com','123456','admin');
+CREATE TABLE Produtos(
+Id INT PRIMARY KEY auto_increment,
+Nome VARCHAR(50) NOT NULL,
+Preco DECIMAL(10,2) NOT NULL,
+DataCadastro DATETIME DEFAULT current_timestamp
+);
+
 
 INSERT INTO Usuarios(Nome,Email,Senha,Nivel)
-VALUES('Usuario','usuario@email.com','123456','operador');
+VALUES('Administrador','admin@email.com','123456','Admin');
+
+INSERT INTO Usuarios(Nome,Email,Senha,Nivel)
+VALUES('Usuario','usuario@email.com','123456','Operador');
 
 SELECT * FROM Usuarios;
+SELECT * FROM Produtos;
